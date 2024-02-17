@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Console Module """
+""" Console Module for AirBnB_clone_v2"""
 import cmd
 import sys
 from models.base_model import BaseModel
