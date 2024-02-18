@@ -42,7 +42,7 @@ class DBStorage:
             os.environ.get("HBNB_MYSQL_DB")),
             pool_pre_ping=True)
 
-        if os.environ.get("HBNB_ENV") is "test":
+        if os.environ.get("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -84,7 +84,7 @@ class DBStorage:
         Function to delete obj in the current session if exists.
         """
 
-        if obj not None:
+        if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
