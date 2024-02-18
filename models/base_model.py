@@ -21,7 +21,7 @@ class BaseModel:
             self.created_at = Column(datetime.utcnow())
             self.updated_at = Column(datetime.utcnow())
             # storage.new(self)
-        else: # kwargs managed here to create instance
+        else:  # kwargs managed here to create instance
             kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
@@ -38,7 +38,7 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        storage.new(self) # Moved from __init__
+        storage.new(self)  # Moved from __init__
         storage.save()
 
     def to_dict(self):
@@ -56,4 +56,4 @@ class BaseModel:
         Function to delete the current instance
         """
         from modles import storage
-        del(storage)
+        delete(storage)
