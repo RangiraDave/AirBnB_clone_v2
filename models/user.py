@@ -2,11 +2,11 @@
 """
 This module defines a class User
 """
-from models.base_model import Base, BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 
 
-class User(Base, BaseModel):
+class User(BaseModel, Base):
     """
     This class defines a user by various attributes
     """
