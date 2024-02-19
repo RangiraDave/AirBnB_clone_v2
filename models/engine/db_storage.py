@@ -7,7 +7,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship
 from dotenv import load_dotenv
-from models.base_model import BaseModel, Base
+from models.base_model import Base, BaseModel
 from models.place import Place
 from models.state import State
 from models.city import City
@@ -36,10 +36,10 @@ class DBStorage:
         """
 
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
-            os.environ.get("HBNB_MYSQL_USER"),
-            os.environ.get("HBNB_MYSQL_PWD"),
-            os.environ.get("HBNB_MYSQL_HOST"),
-            os.environ.get("HBNB_MYSQL_DB")),
+            os.getenv("HBNB_MYSQL_USER"),
+            os.getenv("HBNB_MYSQL_PWD"),
+            os.getenv("HBNB_MYSQL_HOST"),
+            os.getenv("HBNB_MYSQL_DB")),
             pool_pre_ping=True)
 
         if os.environ.get("HBNB_ENV") == "test":

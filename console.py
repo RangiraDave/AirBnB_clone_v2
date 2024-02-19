@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj = eval(my_list[0])(**kwargs)
 
-            if obj not in storage._DBStorage__session:
+            if obj not in storage.all().values():  # _DBStorage__session:
                 storage.new(obj)
                 obj.save()
                 print(obj.id)
