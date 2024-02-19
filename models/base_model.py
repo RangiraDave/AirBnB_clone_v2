@@ -30,7 +30,7 @@ class BaseModel:
 
         if kwargs:
             for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
+                if key in["created_at", "updated_at"] and value is not None:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
@@ -54,15 +54,22 @@ class BaseModel:
     def to_dict(self):
         """Convert instance into dict format"""
 
-        dictionary = self.__dict__.copy()
-        dictionary.pop("_sa_instance_state", None)  # rm SQLAlchemy
-        dictionary.update({'__class__': type(self).__name__})
-        dictionary['created_at'] = self.created_at.isoformat()
+        dic = {}
+        for key, value in self.__dict__.items():
+            if key != '_sa_instance_state':
+                dic[key] = value
+        dic.update(self.__dict__)
+        dic.update({'__class__':
+                        (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dic['created_at'] = self.created_at.isoformat()
         if self.updated_at is not None:
-            dictionary['updated_at'] = self.updated_at.isoformat()
+            dic['updated_at'] = self.updated_at.isoformat()
         else:
-            dictionary['updated_at'] = None
-        return dictionary
+            dic['updated_at'] = None
+        if hasattr(self, '_sa_instance_state'):
+            del dic['_sa_instance_state']
+
+        return dic
 
     def delete(self):
         """

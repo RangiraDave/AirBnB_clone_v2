@@ -42,6 +42,7 @@ class FileStorage:
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
+            f.seek(0)
             json.dump(temp, f)
 
     def reload(self):
@@ -49,7 +50,7 @@ class FileStorage:
         Loads storage dictionary from file
         """
 
-        from models.base_model import BaseModel
+        from models.base_model import BaseModel, Base
         from models.user import User
         from models.place import Place
         from models.state import State
@@ -61,7 +62,7 @@ class FileStorage:
         classes = {
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
+                    'Review': Review, 'Base': Base
                   }
         try:
             temp = {}
@@ -69,6 +70,7 @@ class FileStorage:
                 data = f.read()
                 if not data:
                     return
+                f.seek(0)
                 temp = json.load(f)
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
