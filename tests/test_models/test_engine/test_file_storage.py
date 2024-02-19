@@ -22,7 +22,9 @@ class test_fileStorage(unittest.TestCase):
         try:
             os.remove('file.json')
         except TypeError:
-            pass
+            print("Invalid type")
+        except FileNotFoundError:
+            print("file.json file not found")
 
     def test_obj_list_empty(self):
         """ __objects is initially empty """

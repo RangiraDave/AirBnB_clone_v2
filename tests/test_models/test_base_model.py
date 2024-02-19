@@ -25,7 +25,9 @@ class test_basemodel(unittest.TestCase):
         try:
             os.remove('file.json')
         except TypeError:
-            pass
+            print("Invalid type")
+        except FileNotFoundError:
+            print("file.json not found")
 
     def test_default(self):
         """ """
