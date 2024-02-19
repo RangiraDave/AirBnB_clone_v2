@@ -116,11 +116,11 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            my_list = line.split(" ")
+            lst = line.split(" ")
 
             kwargs = {}
-            for i in range(1, len(my_list)):
-                key, value = tuple(my_list[i].split("="))
+            for i in range(1, len(lst)):
+                key, value = tuple(lst[i].split("="))
                 if value[0] == '"':
                     value = value.strip('"').replace("_", " ")
                 else:
@@ -131,9 +131,9 @@ class HBNBCommand(cmd.Cmd):
                 kwargs[key] = value
 
             if kwargs == {}:
-                obj = eval(my_list[0])()
+                obj = eval(lst[0])()
             else:
-                obj = eval(my_list[0])(**kwargs)
+                obj = eval(lst[0])(**kwargs)
 
             if obj not in storage.all().values():  # _DBStorage__session:
                 storage.new(obj)

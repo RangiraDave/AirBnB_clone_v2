@@ -6,11 +6,9 @@ This module defines a base class for all models in our hbnb clone
 import uuid
 from datetime import datetime
 import models
-#  from models import storage
-#  import sqlalchemy
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-#  from sqlalchemy.orm import sessionmaker
+
 
 Base = declarative_base()
 
@@ -18,15 +16,10 @@ Base = declarative_base()
 class BaseModel:
     """A definition of the base class for all hbnb models"""
 
-    id = Column(String(60),
-            primary_key=True,
-            nullable=False)
-    created_at = Column(DateTime,
-            nullable=False,
-            default=datetime.utcnow)
-    updated_at = Column(DateTime,
-            nullable=False,
-            default=datetime.utcnow,
+    id = Column(String(60), primary_key=True, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(
+            DateTime, nullable=False, default=datetime.utcnow,
             onupdate=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
@@ -39,8 +32,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                # if key != "__class__":
-                    # setattr(self, key, value)
+                if key != "__class__":
+                    setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -64,8 +57,6 @@ class BaseModel:
         dictionary = self.__dict__.copy()
         dictionary.pop("_sa_instance_state", None)  # rm SQLAlchemy
         dictionary.update({'__class__': type(self).__name__})
-        #  dictionary.update({'__class__':
-                          #  (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
