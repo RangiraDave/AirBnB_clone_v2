@@ -48,11 +48,16 @@ class FileStorage:
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
+                data = f.read()
+                if not data:
+                    return
                 temp = json.load(f)
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+        except json.JSONDecodeError:
+            print("Error: Invalid JSON in file")
 
     def delete(self, obj=None):
         """

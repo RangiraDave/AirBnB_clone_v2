@@ -58,7 +58,8 @@ class BaseModel:
         dictionary.pop("_sa_instance_state", None)  # rm SQLAlchemy
         dictionary.update({'__class__': type(self).__name__})
         dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
+        if self.updated_at is not None:
+            dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
 
     def delete(self):
