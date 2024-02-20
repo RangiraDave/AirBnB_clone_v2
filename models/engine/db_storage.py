@@ -4,7 +4,7 @@ New engine DBStorage
 """
 
 import os
-import sqlalchemy
+#  import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship
 from dotenv import load_dotenv
