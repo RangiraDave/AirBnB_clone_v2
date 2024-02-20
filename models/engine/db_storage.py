@@ -4,7 +4,8 @@ New engine DBStorage
 """
 
 import os
-from models.base_model import Base, BaseModel
+from models.base_model import Base
+from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -12,17 +13,16 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session  # relationship
+from sqlalchemy.orm import sessionmaker, scoped_session
 from dotenv import load_dotenv
 
 
 
 """
 Loading all files from environment (env)
-"""
+
 load_dotenv()
-
-
+"""
 class DBStorage:
     """
     The database class definition
@@ -51,19 +51,18 @@ class DBStorage:
         Function to return a dictionary
         """
 
-        classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
-
         if cls is None:
-            objs = []
-            for table_cls in classes:
-                objs.extend(self.__session.query(table_cls).all())
+            obj = self.__session.query(State).all()
+            obj.extend(self.__session.query(City).all())
+            obj.extend(self.__session.query(User).all())
+            obj.extend(self.__session.query(Place).all())
+            obj.extend(self.__session.query(Review).all())
+            obj.extend(self.__session.query(Amenity).all())
         else:
-            if isinstance(cls, str):
+            if type(cls) == str:
                 cls = eval(cls)
-            objs = self.__session.query(cls).all()
-        dic = {"{}.{}".format(type(ob).__name__, ob.id): ob for ob in objs}
-
-        return dic
+            obj = self.__session.query(cls)
+        return {"{}.{}".format(type(i).__name__, i.id): i for i in obj}
 
     def new(self, obj):
         """
@@ -96,6 +95,6 @@ class DBStorage:
 
         Base.metadata.create_all(self.__engine)
         session_expire = sessionmaker(
-                bind=self.__engine, expire_on_commit=True)
+                bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_expire)
         self.__session = Session()

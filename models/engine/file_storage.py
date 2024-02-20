@@ -4,6 +4,13 @@ This module defines a class to manage file storage for hbnb clone
 """
 
 import json
+from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class FileStorage:
@@ -47,15 +54,6 @@ class FileStorage:
         Loads storage dictionary from file
         """
 
-        from models.base_model import BaseModel, Base
-        from models.amenity import Amenity
-        from models.city import City
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-
-
         try:
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 for obj in json.load(f).values():
@@ -63,9 +61,9 @@ class FileStorage:
                     del obj["__class__"]
                     self.new(eval(name)(**obj))
 
-        except FileNotFoundError as e:
-            print(f"Error: {e}")
-        except json.JSONDecodeError as e:
+        except FileNotFoundError:
+            pass
+        except json.JSONDecodeError:
             pass
 
     def delete(self, obj=None):
@@ -76,10 +74,3 @@ class FileStorage:
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             del self.__objects[key]
-
-    def reloader(self):
-        """
-        Function to call relaod
-        """
-
-        self.reload()
