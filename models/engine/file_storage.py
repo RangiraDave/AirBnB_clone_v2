@@ -37,13 +37,10 @@ class FileStorage:
         Saves storage dictionary to file
         """
 
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            f.seek(0)
-            json.dump(temp, f)
+        obj_dic = {obj: self.__objects[obj].to_dict(
+            ) for obj in self.__objects.keys()}
+        with open(self.__file_path, "w", encoding="utf-8") as f:
+            json.dump(obj_dic, f)
 
     def reload(self):
         """
@@ -51,33 +48,25 @@ class FileStorage:
         """
 
         from models.base_model import BaseModel, Base
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
         from models.amenity import Amenity
+        from models.city import City
+        from models.place import Place
         from models.review import Review
+        from models.state import State
+        from models.user import User
 
 
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review, 'Base': Base
-                  }
         try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                data = f.read()
-                if not data:
-                    return
-                f.seek(0)
-                temp = json.load(f)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
-        except FileNotFoundError:
+            with open(self.__file_path, "r", encoding="utf-8") as f:
+                for obj in json.load(f).values():
+                    name = obj["__class__"]
+                    del obj["__class__"]
+                    self.new(eval(name)(**obj))
+
+        except FileNotFoundError as e:
+            print(f"Error: {e}")
+        except json.JSONDecodeError as e:
             pass
-        except json.JSONDecodeError:
-            print("Error: Invalid JSON in file")
 
     def delete(self, obj=None):
         """
@@ -85,5 +74,12 @@ class FileStorage:
         """
 
         if obj is not None:
-            key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            self.__objects.pop(key, None)
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            del self.__objects[key]
+
+    def reloader(self):
+        """
+        Function to call relaod
+        """
+
+        self.reload()

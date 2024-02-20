@@ -4,17 +4,17 @@ New engine DBStorage
 """
 
 import os
-#  import sqlalchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session, relationship
-from dotenv import load_dotenv
 from models.base_model import Base, BaseModel
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.user import User
 from models.amenity import Amenity
+from models.city import City
+from models.place import Place
 from models.review import Review
+from models.state import State
+from models.user import User
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session  # relationship
+from dotenv import load_dotenv
+
 
 
 """
@@ -43,7 +43,7 @@ class DBStorage:
             os.getenv("HBNB_MYSQL_DB")),
             pool_pre_ping=True)
 
-        if os.environ.get("HBNB_ENV") == "test":
+        if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
