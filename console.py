@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" Console Module for AirBnB_clone_v2"""
+"""
+Console Module for AirBnB_clone_v2
+"""
+
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -13,7 +16,9 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """ Contains the functionality for the HBNB console"""
+    """
+    Contains the functionality for the HBNB console
+    """
 
     # determines prompt for interactive/non-interactive modes
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
