@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-""" Place Module for HBNB project """
-
-<<<<<<< HEAD
+'''
+    Define the class Place.
+'''
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Table, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
@@ -24,24 +24,10 @@ place_amenity = Table(
 
 
 class Place(BaseModel, Base):
-    """
-    Define the class Place that inherits from BaseModel.
-    """
-
+    '''
+        Define the class Place that inherits from BaseModel.
+    '''
     __tablename__ = "places"
-
-=======
-from models.base_model import Base, BaseModel
-from models.city import City
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
-from sqlalchemy.orm import relationship
-
-
-class Place(BaseModel):
-    """ A place to stay """
-
-    __tablename__ = "places"
->>>>>>> 48abb15b0ad04aafda82669c739f860618105560
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -53,9 +39,6 @@ class Place(BaseModel):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-
-<<<<<<< HEAD
-    """
     amenities = relationship("Amenity", secondary=place_amenity,
                              back_populates="place_amenities", viewonly=False)
 
@@ -68,15 +51,9 @@ class Place(BaseModel):
                                                       .format(amenity))
                 if amenityObj:
                     objlist.append(amenityObj)
-
             return objlist
 
         @amenities.setter
         def amenities(self, obj):
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
-    """
-=======
-    # cities = relationship('City', back_populates='places', cascade='delete')
-    reviews = relationship('Review', backref='place', cascade='delete')
->>>>>>> 48abb15b0ad04aafda82669c739f860618105560
