@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
+<<<<<<< HEAD
 
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
@@ -22,3 +23,15 @@ class Amenity(BaseModel, Base):
                                        back_populates="amenities")
     else:
         name = ""
+=======
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String
+
+class Amenity(BaseModel, Base):
+    """
+    Definition of Amenity class
+    """
+
+    __tablename__ = 'amenities'
+    name = Column(String)
+>>>>>>> 48abb15b0ad04aafda82669c739f860618105560

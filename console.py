@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 '''
     Implementing the console for the HBnB project.
 '''
@@ -9,17 +10,35 @@ from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 from models.base_model import BaseModel
 from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
+=======
+"""
+Console Module for AirBnB_clone_v2
+"""
+
+import cmd
+import sys
 from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.__init__ import storage
+>>>>>>> 48abb15b0ad04aafda82669c739f860618105560
+from models.place import Place
 from models.review import Review
+<<<<<<< HEAD
 import models
+=======
+from models.state import State
+from models.user import User
+>>>>>>> 48abb15b0ad04aafda82669c739f860618105560
 
 
 class HBNBCommand(cmd.Cmd):
     """
+<<<<<<< HEAD
     Contains the functionality for the HBNB console.
+=======
+    Contains the functionality for the HBNB console
+>>>>>>> 48abb15b0ad04aafda82669c739f860618105560
     """
 
     # determines prompt for interactive/non-interactive modes

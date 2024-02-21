@@ -3,6 +3,7 @@
 Module for testing file storage
 """
 
+<<<<<<< HEAD
 import os
 import json
 import unittest
@@ -136,3 +137,14 @@ class test_fileStorage(unittest.TestCase):
 
         self.session.close()
         self.session.rollback()
+=======
+import unittest
+from models.base_model import BaseModel, Base
+from models import storage
+import os
+
+
+class test_fileStorage(unittest.TestCase):
+    """ Class to test the db storage method """
+    pass
+>>>>>>> 48abb15b0ad04aafda82669c739f860618105560
