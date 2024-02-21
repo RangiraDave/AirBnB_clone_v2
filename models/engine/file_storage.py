@@ -4,86 +4,75 @@ This module defines a class to manage file storage for hbnb clone
 """
 
 import json
+import models
 
 
 class FileStorage:
     """
-    This class manages storage of hbnb models in JSON format
+    Serializes instances to JSON file and deserializes to JSON file.
     """
 
-    __file_path = 'file.json'
+    __file_path = "file.json"
     __objects = {}
 
     def all(self, cls=None):
         """
-        Returns a dictionary of models currently in storage
+        Return the dictionary
         """
 
-        if cls is None:
+        if not cls:
             return self.__objects
-        objs = self.__objects.items()
-        return {k: v for k, v in objs if isinstance(v, cls)}
+        else:
+            new = {obj: key for obj, key in self.__objects.items()
+                   if type(key) is cls}
+            return new
 
     def new(self, obj):
         """
-        Adds new object to storage dictionary
+        Set in __objects the obj with key <obj class name>.id
+            Aguments:
+                obj : An instance object.
         """
 
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
+        key = str(obj.__class__.__name__) + "." + str(obj.id)
+        value_dict = obj
+        FileStorage.__objects[key] = value_dict
 
     def save(self):
         """
-        Saves storage dictionary to file
+        Serializes __objects attribute to JSON file.
         """
 
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            f.seek(0)
-            json.dump(temp, f)
+        objects_dict = {}
+        for key, val in FileStorage.__objects.items():
+            objects_dict[key] = val.to_dict()
+
+        with open(FileStorage.__file_path, mode='w', encoding="UTF8") as fd:
+            json.dump(objects_dict, fd)
 
     def reload(self):
         """
-        Loads storage dictionary from file
+        Deserializes the JSON file to __objects.
         """
 
-        from models.base_model import BaseModel, Base
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
-
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review, 'Base': Base
-                  }
         try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                data = f.read()
-                if not data:
-                    return
-                f.seek(0)
-                temp = json.load(f)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
+            with open(FileStorage.__file_path, encoding="UTF8") as fd:
+                FileStorage.__objects = json.load(fd)
+            for key, val in FileStorage.__objects.items():
+                class_name = val["__class__"]
+                class_name = models.classes[class_name]
+                FileStorage.__objects[key] = class_name(**val)
         except FileNotFoundError:
             pass
-        except json.JSONDecodeError:
-            print("Error: Invalid JSON in file")
 
     def delete(self, obj=None):
         """
-        Function to delete object from __objects if it's inside.
+        Deletes obj from __objects if it’s inside
         """
 
-        if obj is not None:
-            key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            self.__objects.pop(key, None)
+        FileStorage.__objects = {
+            key: value for key,
+            value in FileStorage.__objects.items() if value != obj}
+
+    def close(self):
+        self.reload()
