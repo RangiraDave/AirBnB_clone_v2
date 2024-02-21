@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-'''
-    Define the class Place.
-'''
+""" Place Module for HBNB project """
+
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Table, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
