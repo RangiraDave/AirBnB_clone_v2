@@ -5,6 +5,7 @@ Python script to generate a .tgz archeive from the web_static files
 
 from fabric.api import local
 from datetime import datetime
+import os
 
 
 def do_pack():
