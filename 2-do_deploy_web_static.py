@@ -3,13 +3,14 @@
 Fabric Script to distribute the achive to my servers and deploy it
 """
 
-frmo fabric.api import env, put, run
+from fabric.api import env, put, run
 import os
 
 
 # defining remote user and hosts
 env.user = "ubuntu"
 env.hosts = ["18.235.255.111", "18.204.14.87"]
+
 
 def do_deploy(archive_path):
     """
