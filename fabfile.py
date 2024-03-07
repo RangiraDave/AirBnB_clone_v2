@@ -7,8 +7,7 @@ from fabric.api import env, put, run
 import os
 
 
-# defining remote user and hosts with private key
-# env.key_filename = ["~/root/alx-system_engineering-devops/id_rsa_new"]
+# defining remote user and hosts
 env.user = "ubuntu"
 env.hosts = ["18.235.255.111", "18.204.14.87"]
 
