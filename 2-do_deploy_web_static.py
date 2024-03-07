@@ -8,7 +8,7 @@ import os
 
 
 # defining remote user and hosts with private key
-# env.key_filename = ["~/root/alx-system_engineering-devops/id_rsa_new"]
+env.key_filename = ["~/root/alx-system_engineering-devops/id_rsa_new"]
 env.user = "ubuntu"
 env.hosts = ["18.235.255.111", "18.204.14.87"]
 
