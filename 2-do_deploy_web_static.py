@@ -13,7 +13,6 @@ env.user = "ubuntu"
 env.hosts = ["18.235.255.111", "18.204.14.87"]
 
 
-@task
 def do_deploy(archive_path):
     """
     Funcyion taht destributes an archive to the servers and deploy 'em
@@ -23,27 +22,29 @@ def do_deploy(archive_path):
         return False
 
     try:
-        # uploading the archive
-        put(archive_path, "/temp/")
+        try:
+        # getting name of archive from archive_path
+        temp = str(archive_path).split("/")[-1]
+        name = temp.split(".")[0]
 
-        # Extracting the file name without the .tgz
-        filename = os.path.basename(archive_path)
-        folder_name = "/data/web_static/releases/" + filename[:-4]
+        # placing the archive
+        put(archive_path, "/tmp/")
 
-        # creating folder for new release
-        run("mkdir -p {}".format(folder_name))
+        # uncompressing and extraction path
+        extrPath = "/data/web_static/releases/{}/".format(name)
+        run("mkdir -p {}".format(extrPath))
+        run("tar -xzf /tmp/{} -C {}".format(temp, extrPath))
+        run("mv {}/web_static/* {}".format(extrPath, extrPath))
 
-        # uncomplessing the archive
-        run("tar -xzf /temp/{} -C {}".format(filename, folder_name))
+        # removing extracted
+        run("rm /tmp/{}".format(temp))
 
-        # deleting the archive from my sereve
-        run("rm /temp/{}".format(filename))
-
-        # deleting the existing symbolic link
+        # deletes the symbolic
         run("rm -rf /data/web_static/current")
 
-        # creating a new symbolic link
-        run("ln -s {} /data/web_static/current".format(folder_name))
+        # new symbolic link
+        run("ln -s {} /data/web_static/current".format(extrPath))
+        print("New version deployed!")
 
         return True
 

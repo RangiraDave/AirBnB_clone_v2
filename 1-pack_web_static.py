@@ -14,7 +14,7 @@ def do_pack():
     """
 
     # creating version folder if not exsists
-    os.makedirs("versions", exist_ok=True)
+    local(" mkdir -p versions/")
 
     # defining archeive name
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
