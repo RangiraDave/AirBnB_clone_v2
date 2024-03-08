@@ -14,7 +14,9 @@ env.hosts = ["18.235.255.111", "18.204.14.87"]
 
 
 def do_deploy(archive_path):
-    # Funcyion taht destributes an archive to the servers and deploy them
+    """
+    Funcyion taht destributes an archive to the servers and deploy them
+    """
 
     if not os.path.exists(archive_path):
         return False
