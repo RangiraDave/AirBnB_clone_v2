@@ -31,8 +31,8 @@ def c(text):
     return f'C {text}'
 
 
-@app.route('/python/<text>')
-def print_python(text='is cool'):
+@app.route('/python/')
+def print(text='is cool'):
     """ Printing python followed by the message """
 
     text = text.replace('_', ' ') if '_' in text else text
