@@ -32,7 +32,7 @@ def c(text):
 
     text.replace('_', ' ') if '_' in text else text
 
-    return f'C is {text}'
+    return f'C {text}'
 
 
 if __name__ == '__main__':
