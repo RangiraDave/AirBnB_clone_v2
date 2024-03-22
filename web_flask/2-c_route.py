@@ -30,7 +30,7 @@ def hbnb():
 def c(text):
     """ Desplaying C with the following text """
 
-    text = text.replace('_', ' ') if '_' in text else _
+    text = text.replace('_', ' ') if '_' in text else text
 
     return f'C {text}'
 
