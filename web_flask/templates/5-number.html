@@ -3,5 +3,9 @@
     <HEAD>
         <TITLE>HBNB</TITLE>
     </HEAD>
-    <BODY>{{ n }}</BODY>
+    <BODY>
+	    {% if n %}
+	    <H1>Number: {{ n }}</H1>
+	    {% endif %}
+    </BODY>
 </HTML>
