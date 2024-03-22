@@ -30,6 +30,7 @@ def c(text):
 
     return f'C {text}'
 
+
 @app.route('/python/<text>')
 def print_python(text='is cool'):
     """ Printing python followed by the message """
