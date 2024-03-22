@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Script to add /python/<text> functionality """
 
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
