@@ -18,17 +18,19 @@ def hello():
 
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb')
 def hbnb():
     """ Desplaying HBNB """
 
     return 'HBNB'
 
+
 @app.route('/c/<text>')
 def c(text):
     """ Desplaying C with the following text """
 
-    a.replace('_', ' ') if '_' in text else _
+    a.replace('_', ' ') if '_' in text else text
 
     return f'C is {text}'
 
