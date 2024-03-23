@@ -16,8 +16,8 @@ def teardown(exception):
     storage.close()
 
 
-@app.route('/states_list')
-def states_list():
+@app.route('/cities_by_states')
+def cities_by_states():
     """ Function to disaplay a HTML page with states """
 
     states = storage.all('State')
