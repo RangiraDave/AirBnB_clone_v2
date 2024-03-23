@@ -10,19 +10,20 @@ app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(exception):
     """ Function to clear the app content """
 
     storage.close()
 
 
 @app.route('/states_list')
-def states_list(states):
+def states_list():
     """ Function to disaplay a HTML page with states """
 
     states = storage.all(states)
+    sorted_list = sorted(states, key=lambda state: state.name)
 
-    return render_template('7-states_list.html', states=states)
+    return render_template('7-states_list.html', states=sorted_list)
 
 
 if __name__ == "__main__":
