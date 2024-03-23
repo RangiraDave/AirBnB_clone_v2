@@ -11,7 +11,7 @@ app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def teardown(exception):
-    """ Function to clear the app content """
+    """ Function to clear the SQLAlchemy session """
 
     storage.close()
 
@@ -20,10 +20,10 @@ def teardown(exception):
 def states_list():
     """ Function to disaplay a HTML page with states """
 
-    states = storage.all(states)
-    sorted_list = sorted(states, key=lambda state: state.name)
+    states = storage.all('State')
+    # sorted_list = sorted(states, key=lambda state: state.name)
 
-    return render_template('7-states_list.html', states=sorted_list)
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == "__main__":
