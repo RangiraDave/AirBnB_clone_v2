@@ -1,14 +1,25 @@
-#!/usr/bin/env bash
-pip3 uninstall Fabric
-sudo apt-get -y install libffi-dev
-sudo apt-get -y install libssl-dev
-sudo apt-get -y install build-essential
-sudo apt-get -y install python3.4-dev
-sudo apt-get -y install libpython3-dev
-pip3 install pyparsing
-pip3 install appdirs
-pip3 install setuptools==40.1.0
-pip3 install cryptography==2.8
-pip3 install bcrypt==3.1.7
-pip3 install PyNaCl==1.3.0
-pip3 install Fabric3==1.14.post1
+#!/bin/bash
+# Install Fabric3 and its dependencies
+# From discod channel
+
+pip3 uninstall -y Fabric
+
+sudo apt-get update
+sudo apt-get install -y libffi-dev libssl-dev build-essential python3.8-dev libpython3-dev
+
+packages=(
+    "pyparsing"
+    "appdirs"
+    "setuptools==40.1.0"
+    "cryptography==2.8"
+    "bcrypt==3.1.7"
+    "PyNaCl==1.3.0"
+    "Fabric3==1.14.post1"
+)
+
+# Install Python packages
+for package in "${packages[@]}"; do
+    pip install --force-reinstall "$package"
+done
+
+echo "Installation completed successfully."
