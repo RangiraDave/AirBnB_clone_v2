@@ -17,6 +17,7 @@ def teardown(exception):
 
 
 @app.route('/states')
+@app.route('/states/<id>')
 def states():
     """ Function to disaplay a HTML page with states """
 
@@ -25,13 +26,13 @@ def states():
     return render_template('9-states.html', states=states)
 
 
-@app.route('/states/<id>')
-def state_id(state_id):
-    """ Function to render a HTML with state id """
+# @app.route('/states/<id>')
+# def state_id(state_id):
+#    """ Function to render a HTML with state id """
 
-    states = storage.all('State')
+#    states = storage.all('State')
 
-    return render_template('9-state.html', states=states)
+#    return render_template('9-state.html', states=states)
 
 
 if __name__ == "__main__":
