@@ -30,10 +30,8 @@ def state_id(state_id):
     """ Function to render a HTML with state id """
 
     states = storage.all('State')
-    if states.id == state_id:
-        return render_template('9-state.html', states=states)
-    else:
-        return 'Not found!'
+
+    return render_template('9-state.html', states=states)
 
 
 if __name__ == "__main__":
