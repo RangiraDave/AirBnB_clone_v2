@@ -22,7 +22,7 @@ def states():
 
     states = storage.all('State')
 
-    return render_template('9-states.html', states=states)
+    return render_template('9-states.html', state=states)
 
 
 @app.route('/states/<id>')
