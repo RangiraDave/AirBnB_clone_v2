@@ -16,14 +16,24 @@ def teardown(exception):
     storage.close()
 
 
-@app.route('/cities_by_states')
-def cities_by_states():
+@app.route('/states')
+def states():
     """ Function to disaplay a HTML page with states """
 
     states = storage.all('State')
-    # sorted_list = sorted(states, key=lambda state: state.name)
 
-    return render_template('8-cities_by_states.html', states=states)
+    return render_template('9-states.html', states=states)
+
+
+@app.route('/states/<id>')
+def state_id(state_id):
+    """ Function to render a HTML with state id """
+
+    states = storage.all('State')
+    if states.id == state_id:
+        return render_template('9-state.html', states=states)
+    else:
+        return 'Not found!'
 
 
 if __name__ == "__main__":
