@@ -10,7 +10,7 @@ app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown(exc):
     """ Function to clear the SQLAlchemy session """
 
     storage.close()
