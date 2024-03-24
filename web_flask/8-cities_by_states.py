@@ -9,12 +9,10 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.teardown_appcontext
-def teardown(exception):
-    """ Function to clear the SQLAlchemy session """
-
-    storage.close()
-
+# @app.teardown_appcontext
+# def teardown(exception):
+#    """ Function to clear the SQLAlchemy session """
+#    storage.close()
 
 @app.route('/cities_by_states')
 def cities_by_states():
@@ -24,6 +22,13 @@ def cities_by_states():
     # sorted_list = sorted(states, key=lambda state: state.name)
 
     return render_template('8-cities_by_states.html', states=states)
+
+
+@app.teardown_appcontext
+def teardown(exception):
+    """ Function to clear the SQLAlchemy session """
+
+    storage.close()
 
 
 if __name__ == "__main__":
